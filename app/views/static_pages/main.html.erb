@@ -1,0 +1,33 @@
+<% if @user.username.nil? %>
+  <div>
+    <h3>Login</h3>
+    <%= form_for @user, :url => { :action => "login", :controller=> 'users' } do |f| %>
+      <%=  f.text_field :username, :placeholder => 'username' %>
+      <%=  f.password_field :password, :placeholder => 'password' %>
+      <%= f.submit 'Login' %>
+    <% end %>
+    <br>
+    <%= link_to "create an account", new_user_path %>
+  </div>
+<% else %>
+  <h3>Welcome <%= @user.username %></h3>
+  <br>
+  <%= link_to "logout", logout_user_path%>
+
+<% end %>
+<br>
+<%= flash[:error] if flash[:error] %>
+<br>
+
+<div>
+
+<%= form_for @link do |f| %>
+  <%= f.text_field :url, :placeholder => "Url" %>
+  <%= f.submit 'Create Link' %>
+<% end %>
+<br>
+<%= link_to "#{request.url}user_links/" + flash[:notice], 
+            show_user_link_path(flash[:notice]) \
+            if flash[:notice] %>
+
+</div>
